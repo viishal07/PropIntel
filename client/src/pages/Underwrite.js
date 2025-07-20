@@ -25,7 +25,7 @@ const propertyTypes = [
   'Land',
 ];
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://propintel.onrender.com/api';
 
 const Underwrite = () => {
   const location = useLocation();

@@ -8,7 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://propintel.onrender.com/api';
 
 const PROJECT_EMAIL = 'propintelai@example.com'; // Replace with your real project email
 const PHONE_NUMBER = '+91-9876543210'; // Replace with your real phone number
