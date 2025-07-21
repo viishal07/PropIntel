@@ -11,7 +11,7 @@ const app = express();
 const PORT = 5000;
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/underwriting', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/underwriting', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

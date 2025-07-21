@@ -25,7 +25,7 @@ const propertyTypes = [
   'Land',
 ];
 
-const API_BASE = 'https://propintel.onrender.com/api';
+const API_BASE = 'http://localhost:5000/api';
 
 const Underwrite = () => {
   const location = useLocation();
@@ -67,8 +67,11 @@ const Underwrite = () => {
     if (!address) return;
     setLoading(true);
     try {
-      const res = await axios.post(`${API_BASE}/property/underwrite`, { address, type: propertyType });
-      setPropertyInfo(res.data);
+      // First, fetch property info
+      await fetchPropertyInfo(address, propertyType);
+      // Then, underwrite (if needed)
+      // const res = await axios.post(`${API_BASE}/property/underwrite`, { address, type: propertyType });
+      // setPropertyInfo(res.data);
       fetchHistory();
     } catch (err) {
       setPropertyInfo(null);
@@ -261,13 +264,19 @@ const Underwrite = () => {
             Past Underwritings
           </Typography>
           <Paper variant="outlined" sx={{ p: 2, background: 'rgba(240,246,255,0.7)' }}>
-            {history.length === 0 && <Typography color="text.secondary">No history found.</Typography>}
-            {history.length > 0 && (
+            {history.length === 0 ? (
+              <Typography color="text.secondary">No history found.</Typography>
+            ) : (
               <List>
                 {history.map((item, idx) => (
-                  <ListItem key={idx} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{item.address}</span>
-                    <span style={{ color: '#888', fontSize: 14 }}>{item.date} — {item.summary}</span>
+                  <ListItem key={idx} divider>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography fontWeight="bold">{item.address}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {new Date(item.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                        {item.summary ? ` — ${item.summary}` : ''}
+                      </Typography>
+                    </Box>
                   </ListItem>
                 ))}
               </List>
